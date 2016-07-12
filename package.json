@@ -1,0 +1,21 @@
+{
+  "name": "nodebm",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BillMeFr/nodebm.git"
+  },
+  "license": "GPL-3.0",
+  "scripts": {
+    "test": "cross-env NODE_PATH=source babel-node source/test/index.js",
+    "test:calculs": "cross-env NODE_PATH=source babel-node source/test/calculs/index.js"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-core": "^6.10.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "cross-env": "^1.0.8",
+    "tape": "^4.6.0"
+  }
+}
