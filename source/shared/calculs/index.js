@@ -16,4 +16,16 @@ const calculDuDu = ( { partsUtilisateur, prix, nombreDeParts } ) => {
   return partsUtilisateur * prix / nombreDeParts;
 };
 
-export { calculDuDu };
+const sommeDesDus = ( tableau, idPayeur ) => {
+  return tableau
+    .map( ( objet ) => {
+      if ( objet.idPayeur === idPayeur ) {
+        return calculDuDu( objet );
+      }
+    } )
+    .reduce( ( accumulateur, du ) => {
+      return accumulateur + du;
+    } );
+};
+
+export { calculDuDu, sommeDesDus };
