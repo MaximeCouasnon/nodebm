@@ -1,31 +1,76 @@
 /**
+ * Fonction pour Array.prototype.reduce : somme des valeurs d'un tableau
+ */
+const sum = ( a, b ) => a + b;
+
+/**
  * Calculer le dû pour une personne sur une dépense à plusieurs
  *
- * @param {Number} options.partsUtilisateur - Parts de l'utilisateur en cours
- * @param {Number} options.prix - Prix total de la dépense
- * @param {Number} options.nombreDeParts - Nombre de parts total de la dépense
- * @return {Number|false} - false si division par 0 (au lieu de NaN)
+ * @param {Object} depense - Une ligne de dépense du groupe
+ * @param {Array} depense.parts - Tableau des parts de chacun dans la dépense
+ * @param {Number} depense.prix - Prix total de la dépense
+ * @param {String} idUtilisateur - Identifiant de la personne dont on calcule le
+ * dû sur cette dépense
+ * @return {Number} - Le dû de la personne
  */
-const calculDuDu = ( { partsUtilisateur, prix, nombreDeParts } ) => {
+const calculDuDu = ( { parts = [], prix = 0 }, idUtilisateur ) => {
+  const nombreDeParts = parts.length;
+
   // Il est anormal qu'il y ait 0 parts sur une dépense
-  // on retourne false au lieu de NaN
+  // on retourne 0 au lieu de NaN
   if ( !nombreDeParts ) {
-    return false;
+    return 0;
   }
+
+  const partsUtilisateur = parts
+    .map( id => {
+      if ( id === idUtilisateur ) {
+        return 1
+      }
+      return 0;
+    } )
+    .reduce( sum );
 
   return partsUtilisateur * prix / nombreDeParts;
 };
 
-const sommeDesDus = ( tableau, idPayeur ) => {
-  return tableau
-    .map( ( objet ) => {
-      if ( objet.idPayeur === idPayeur ) {
-        return calculDuDu( objet );
-      }
-    } )
-    .reduce( ( accumulateur, du ) => {
-      return accumulateur + du;
-    } );
+/**
+ * Faire la somme des dûs d'un utilisateur sur un groupe
+ *
+ * @param {Array} groupe - Un tableau de dépenses
+ * @param {String} idUtilisateur - Identifiant de la personne dont on calcule la
+ * somme des dûs sur ce groupe
+ */
+const sommeDesDus = ( groupe = [], idUtilisateur ) => {
+  return groupe
+    .map( depense => calculDuDu( depense, idUtilisateur ) )
+    .reduce( sum );
 };
 
-export { calculDuDu, sommeDesDus };
+/**
+ * Faire la somme des dépenses d'un utilisateur sur un groupe
+ *
+ * @param {Array} groupe - Un tableau de dépenses
+ * @param {String} idPayeur - Identifiant de la personne dont on calcule la
+ * somme des paiements sur ce groupe
+ */
+const sommeDesDepenses = ( groupe = [], idPayeur ) => {
+  if ( !groupe.length ) {
+    return 0;
+  }
+
+  return groupe
+    .map( depense => {
+      if ( depense.idPayeur === idPayeur ) {
+        return depense.prix;
+      }
+      return 0;
+    } )
+    .reduce( sum );
+};
+
+export {
+  calculDuDu,
+  sommeDesDus,
+  sommeDesDepenses
+};
