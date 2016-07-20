@@ -7,18 +7,18 @@
 const sum = ( a, b ) => ( Number( a ) || 0 ) + ( Number( b ) || 0 );
 
 /**
- * Calculer le dû pour une personne sur une dépense à plusieurs
+ * Calculate what a user owes on an expense
  *
- * @param {Object} expense - Une ligne de dépense du groupe
- * @param {Array} expense.shares - Tableau des parts de chacun dans la dépense
- * @param {Number} expense.price - Prix total de la dépense
- * @param {String} userId - Identifiant de la personne dont on calcule le
- * dû sur cette dépense
- * @return {Number} - Le dû de la personne
+ * @param {Object} expense - A group's expense
+ * @param {Array} expense.shares - The users' shares table on this expense
+ * @param {Number} expense.price - The price a user paid for this expense
+ * @param {String} userId - We want to calculate this user's debt
+ *
+ * @return {Number} - What the user owes
  */
-const calculDuDu = ( { shares, price = 0 }, userId ) => {
+const calculateDebt = ( { shares, price = 0 }, userId ) => {
   // Only accept an Array
-  //(otherwise a String could break the function with its length property)
+  // (otherwise a String could break the function with its length property)
   if ( !Array.isArray( shares ) ) {
     return 0;
   }
@@ -48,10 +48,19 @@ const calculDuDu = ( { shares, price = 0 }, userId ) => {
  * @param {Array} group - Un tableau de dépenses
  * @param {String} userId - Identifiant de la personne dont on calcule la
  * somme des dûs sur ce groupe
+ *
+ * @return {Number}
  */
-const sommeDesDus = ( group = [], userId ) => {
+const sumDebts = ( group, userId ) => {
+  if ( !Array.isArray( group ) ) {
+    return 0;
+  }
+  if ( group.length === 0 ) {
+    return 0;
+  }
+
   return group
-    .map( expense => calculDuDu( expense, userId ) )
+    .map( expense => calculateDebt( expense, userId ) )
     .reduce( sum );
 };
 
@@ -61,9 +70,14 @@ const sommeDesDus = ( group = [], userId ) => {
  * @param {Array} group - Un tableau de dépenses
  * @param {String} payerId - Identifiant de la personne dont on calcule la
  * somme des paiements sur ce groupe
+ *
+ * @return {Number}
  */
-const sommeDesDepenses = ( group = [], payerId ) => {
-  if ( !group.length ) {
+const sumExpenses = ( group, payerId ) => {
+  if ( !Array.isArray( group ) ) {
+    return 0;
+  }
+  if ( group.length === 0 ) {
     return 0;
   }
 
@@ -78,7 +92,7 @@ const sommeDesDepenses = ( group = [], payerId ) => {
 };
 
 export {
-  calculDuDu,
-  sommeDesDus,
-  sommeDesDepenses
+  calculateDebt,
+  sumDebts,
+  sumExpenses
 };
