@@ -1,10 +1,29 @@
 /**
  * Functional sum for Array.prototype.reduce
+ *
  * @param {Number} a
  * @param {Number} b
+ *
  * @return {Number} a + b
  */
 const sum = ( a, b ) => ( Number( a ) || 0 ) + ( Number( b ) || 0 );
+
+/**
+ * Check if a variable is an array and is not empty (like [])
+ *
+ * @param thing
+ *
+ * @return {Boolean}
+ */
+const isFilledArray = thing => {
+  if ( !Array.isArray( thing ) ) {
+    return false;
+  }
+  if ( thing.length === 0 ) {
+    return false;
+  }
+  return true;
+};
 
 /**
  * Calculate what a user owes on an expense
@@ -17,16 +36,7 @@ const sum = ( a, b ) => ( Number( a ) || 0 ) + ( Number( b ) || 0 );
  * @return {Number} - What the user owes
  */
 const calculateDebt = ( { shares, price = 0 }, userId ) => {
-  // Only accept an Array
-  // (otherwise a String could break the function with its length property)
-  if ( !Array.isArray( shares ) ) {
-    return 0;
-  }
-
-  const totalNumberOfShares = shares.length;
-
-  // If shares is empty (which would be weird), return 0 instead of NaN
-  if ( totalNumberOfShares === 0 ) {
+  if ( !isFilledArray( shares ) ) {
     return 0;
   }
 
@@ -39,23 +49,19 @@ const calculateDebt = ( { shares, price = 0 }, userId ) => {
     } )
     .reduce( sum );
 
-  return userShares * price / totalNumberOfShares;
+  return userShares * price / shares.length;
 };
 
 /**
- * Faire la somme des dûs d'un utilisateur sur un groupe
+ * Calculate what a user owes in a whole group
  *
- * @param {Array} group - Un tableau de dépenses
- * @param {String} userId - Identifiant de la personne dont on calcule la
- * somme des dûs sur ce groupe
+ * @param {Array} group - An array of expenses
+ * @param {String} userId - We want to calculate this user's total debt
  *
  * @return {Number}
  */
 const sumDebts = ( group, userId ) => {
-  if ( !Array.isArray( group ) ) {
-    return 0;
-  }
-  if ( group.length === 0 ) {
+  if ( !isFilledArray( group ) ) {
     return 0;
   }
 
@@ -65,19 +71,15 @@ const sumDebts = ( group, userId ) => {
 };
 
 /**
- * Faire la somme des dépenses d'un utilisateur sur un groupe
+ * Calculate what a user paid for a whole group
  *
- * @param {Array} group - Un tableau de dépenses
- * @param {String} payerId - Identifiant de la personne dont on calcule la
- * somme des paiements sur ce groupe
+ * @param {Array} group - An array of expenses
+ * @param {String} payerId - We want to sum this user's payments
  *
  * @return {Number}
  */
-const sumExpenses = ( group, payerId ) => {
-  if ( !Array.isArray( group ) ) {
-    return 0;
-  }
-  if ( group.length === 0 ) {
+const sumPayments = ( group, payerId ) => {
+  if ( !isFilledArray( group ) ) {
     return 0;
   }
 
@@ -94,5 +96,5 @@ const sumExpenses = ( group, payerId ) => {
 export {
   calculateDebt,
   sumDebts,
-  sumExpenses
+  sumPayments
 };

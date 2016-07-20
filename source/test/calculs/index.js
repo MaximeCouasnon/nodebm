@@ -3,7 +3,7 @@ import test from 'tape';
 import {
   calculateDebt,
   sumDebts,
-  sumExpenses
+  sumPayments
 } from 'shared/calculs';
 
 test( "Calculate what a given user owes for an expense", assert => {
@@ -94,9 +94,9 @@ test( "Calculate what a given user paid for a group", assert => {
     payerId: "Bill",
     price: 100
   } ];
-  assert.equal( sumExpenses( group, "Bill" ), 100,
+  assert.equal( sumPayments( group, "Bill" ), 100,
     "One payment" );
-  assert.equal( sumExpenses( group, "John" ), 0,
+  assert.equal( sumPayments( group, "John" ), 0,
     "One payment I didn't pay" );
 
   group = [ {
@@ -109,17 +109,17 @@ test( "Calculate what a given user paid for a group", assert => {
     payerId: "Bill",
     price: 50
   } ];
-  assert.equal( sumExpenses( group, "Bill" ), 150,
+  assert.equal( sumPayments( group, "Bill" ), 150,
     "Several expenses I paid" );
-  assert.equal( sumExpenses( group, "John" ), 100,
+  assert.equal( sumPayments( group, "John" ), 100,
     "Several expenses, I paid only one" );
 
   group = [];
-  assert.equal( sumExpenses( group, "Bill" ), 0,
+  assert.equal( sumPayments( group, "Bill" ), 0,
     "Abnormal case: 'group' is an empty array" );
 
   group = null;
-  assert.equal( sumExpenses( group, "Bill" ), 0,
+  assert.equal( sumPayments( group, "Bill" ), 0,
     "Abnormal case: 'group' is null" );
 
   assert.end();
