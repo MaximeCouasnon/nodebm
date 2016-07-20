@@ -9,7 +9,7 @@
 const sum = ( a, b ) => ( Number( a ) || 0 ) + ( Number( b ) || 0 );
 
 /**
- * Check if a variable is an array and is not empty (like [])
+ * Check if a variable is an array but not the empty array
  *
  * @param thing
  *
@@ -93,8 +93,36 @@ const sumPayments = ( group, payerId ) => {
     .reduce( sum );
 };
 
+/**
+ * Calculate the end result for a user in a group
+ *
+ * @param {Array} group - An array of expenses
+ * @param {String} userId - We want to get this user's result
+ *
+ * @return {Number}
+ */
+const resultForGroup = ( group, userId ) => {
+  return sumDebts( group, userId ) - sumPayments( group, userId );
+}
+
+/**
+ * Calculate the end result for two users
+ *
+ * @param {Array} expenses - An array of expenses
+ * @param {String} userA - The first user
+ * @param {String} userB - The second user
+ *
+ * @return {Number}
+ */
+const resultForTwo = ( expenses, userA, userB ) => {
+  // Somme( Dûs(UserA)/DépensePayéePar(UserB) ) - Somme( Dûs(UserB)/DépensePayéePar(UserA) )
+  return "TODO";
+};
+
 export {
   calculateDebt,
   sumDebts,
-  sumPayments
+  sumPayments,
+  resultForGroup,
+  resultForTwo
 };

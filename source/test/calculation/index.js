@@ -3,7 +3,9 @@ import test from 'tape';
 import {
   calculateDebt,
   sumDebts,
-  sumPayments
+  sumPayments,
+  resultForGroup,
+  resultForTwo
 } from 'shared/calculation';
 
 test( "Calculate what a given user owes for an expense", assert => {
@@ -121,6 +123,41 @@ test( "Calculate what a given user paid for a group", assert => {
   group = null;
   assert.equal( sumPayments( group, "Bill" ), 0,
     "Abnormal case: 'group' is null" );
+
+  assert.end();
+} );
+
+test( "Calculate a user's final result in a group", assert => {
+  let group;
+
+  group = [ {
+    payerId: "Bill",
+    shares: [ "Bill", "John", "Billy", "Johnny" ],
+    price: 100
+  } ];
+  assert.equal( resultForGroup( group, "Bill" ), -75,
+    "One expense I paid: my friends owe me in the end" );
+  assert.equal( resultForGroup( group, "John" ), 25,
+    "One expense I didn't pay: I owe my friend in the end" );
+
+  assert.end();
+} );
+
+test( "Calculate results between two users", assert => {
+  let expenses;
+
+  expenses = [ {
+    payerId: "Bill",
+    shares: [ "Bill", "John" ],
+    price: 100
+  }, {
+    payerId: "John",
+    shares: [ "Bill", "John" ],
+    price: 10
+  } ];
+
+  // What will the assertions be?
+  assert.skip( "TODO" );
 
   assert.end();
 } );
