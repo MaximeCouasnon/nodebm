@@ -8,7 +8,7 @@
   "license": "GPL-3.0",
   "scripts": {
     "test": "cross-env NODE_PATH=source babel-node source/test/index.js",
-    "test:calculs": "cross-env NODE_PATH=source babel-node source/test/calculs/index.js"
+    "test:calculation": "cross-env NODE_PATH=source babel-node source/test/calculation/index.js"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",

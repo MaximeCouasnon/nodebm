@@ -4,7 +4,7 @@ import {
   calculateDebt,
   sumDebts,
   sumPayments
-} from 'shared/calculs';
+} from 'shared/calculation';
 
 test( "Calculate what a given user owes for an expense", assert => {
   let expense;
