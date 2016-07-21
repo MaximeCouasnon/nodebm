@@ -156,8 +156,15 @@ test( "Calculate results between two users", assert => {
     price: 10
   } ];
 
-  // What will the assertions be?
-  assert.skip( "TODO" );
+  assert.equal( resultForTwo( expenses, "Bill" ), -45,
+    "Result for two people: one expense each" );
+  assert.equal( resultForTwo( expenses, "John" ), 45,
+    "The same, the other way around" );
+
+  assert.equal( resultForGroup( expenses, "Bill" ), -45,
+    "Result for a group of two people: one expense each" );
+  assert.equal( resultForGroup( expenses, "John" ), 45,
+    "The same, the other way around" );
 
   assert.end();
 } );
