@@ -10,7 +10,8 @@
     "benchmark": "cross-env NODE_PATH=source babel-node source/benchmark/index.js",
     "benchmark:calculation": "cross-env NODE_PATH=source babel-node source/benchmark/calculation/index.js",
     "test": "cross-env NODE_PATH=source babel-node source/test/index.js",
-    "test:calculation": "cross-env NODE_PATH=source babel-node source/test/calculation/index.js"
+    "test:calculation": "cross-env NODE_PATH=source babel-node source/test/calculation/index.js",
+    "test:expense": "cross-env NODE_PATH=source babel-node source/test/expense/index.js"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",
