@@ -1,1 +1,1 @@
-import 'test/calculs';
+import 'test/calculation';
