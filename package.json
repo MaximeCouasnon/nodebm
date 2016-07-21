@@ -7,6 +7,8 @@
   },
   "license": "GPL-3.0",
   "scripts": {
+    "benchmark": "cross-env NODE_PATH=source babel-node source/benchmark/index.js",
+    "benchmark:calculation": "cross-env NODE_PATH=source babel-node source/benchmark/calculation/index.js",
     "test": "cross-env NODE_PATH=source babel-node source/test/index.js",
     "test:calculation": "cross-env NODE_PATH=source babel-node source/test/calculation/index.js"
   },
@@ -15,6 +17,7 @@
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.9.0",
+    "benchmark": "^2.1.1",
     "cross-env": "^1.0.8",
     "tape": "^4.6.0"
   }
