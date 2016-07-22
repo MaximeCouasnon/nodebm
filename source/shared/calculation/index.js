@@ -28,7 +28,7 @@ const isFilledArray = thing => {
 /**
  * Calculate what a user owes on an expense
  *
- * @param {Object} expense - A group's expense
+ * @param {Object} expense - Some users' expense
  * @param {Array} expense.shares - The users' shares table on this expense
  * @param {Number} expense.price - The price a user paid for this expense
  * @param {String} userId - We want to calculate this user's debt
@@ -53,37 +53,37 @@ const calculateDebt = ( { shares, price = 0 }, userId ) => {
 };
 
 /**
- * Calculate what a user owes in a whole group
+ * Calculate what a user owes in a whole list of expenses
  *
- * @param {Array} group - An array of expenses
+ * @param {Array} expenses - An array of expenses
  * @param {String} userId - We want to calculate this user's total debt
  *
  * @return {Number}
  */
-const sumDebts = ( group, userId ) => {
-  if ( !isFilledArray( group ) ) {
+const sumDebts = ( expenses, userId ) => {
+  if ( !isFilledArray( expenses ) ) {
     return 0;
   }
 
-  return group
+  return expenses
     .map( expense => calculateDebt( expense, userId ) )
     .reduce( sum );
 };
 
 /**
- * Calculate what a user paid for a whole group
+ * Calculate what a user paid for a whole list of expenses
  *
- * @param {Array} group - An array of expenses
+ * @param {Array} expenses - An array of expenses
  * @param {String} payerId - We want to sum this user's payments
  *
  * @return {Number}
  */
-const sumPayments = ( group, payerId ) => {
-  if ( !isFilledArray( group ) ) {
+const sumPayments = ( expenses, payerId ) => {
+  if ( !isFilledArray( expenses ) ) {
     return 0;
   }
 
-  return group
+  return expenses
     .map( expense => {
       if ( expense.payerId === payerId ) {
         return expense.price;
@@ -94,15 +94,15 @@ const sumPayments = ( group, payerId ) => {
 };
 
 /**
- * Calculate the end result for a user in a group
+ * Calculate the end result for a user in a list of expenses
  *
- * @param {Array} group - An array of expenses
+ * @param {Array} expenses - An array of expenses
  * @param {String} userId - We want to get this user's result
  *
  * @return {Number}
  */
-const resultForGroup = ( group, userId ) => {
-  return sumDebts( group, userId ) - sumPayments( group, userId );
+const resultForGroup = ( expenses, userId ) => {
+  return sumDebts( expenses, userId ) - sumPayments( expenses, userId );
 }
 
 /**

@@ -54,54 +54,54 @@ test( "Calculate what a given user owes for an expense", assert => {
   assert.end();
 } );
 
-test( "Calculate what a given user owes for a group", assert => {
-  let group;
+test( "Calculate what a given user owes for a list of expenses", assert => {
+  let expenses;
 
-  group = [ {
+  expenses = [ {
     shares: [ "Bill", "Billy", "Jim", "Jimmy", "Jimmy" ],
     price: 100
   } ];
-  assert.equal( sumDebts( group, "Bill" ), 20,
+  assert.equal( sumDebts( expenses, "Bill" ), 20,
     "One expense, one share" );
 
-  group = [ {
+  expenses = [ {
     shares: [ "Bill", "Billy", "Jim", "Jimmy", "Jimmy" ],
     price: 100
   }, {
     shares: [ "Bill", "Billy", "Tom", "Jimmy", "Jimmy" ],
     price: 50
   } ];
-  assert.equal( sumDebts( group, "Bill" ), 30,
+  assert.equal( sumDebts( expenses, "Bill" ), 30,
     "Two expenses, two times one share" );
-  assert.equal( sumDebts( group, "Jimmy" ), 60,
+  assert.equal( sumDebts( expenses, "Jimmy" ), 60,
     "Two expenses, two times two shares" );
-  assert.equal( sumDebts( group, "Tom" ), 10,
+  assert.equal( sumDebts( expenses, "Tom" ), 10,
     "No shares on some expenses" );
 
-  group = [];
-  assert.equal( sumDebts( group, "Bill" ), 0,
-  "Abnormal case: 'group' is an empty array" );
+  expenses = [];
+  assert.equal( sumDebts( expenses, "Bill" ), 0,
+  "Abnormal case: 'expenses' is an empty array" );
 
-  group = null;
-  assert.equal( sumDebts( group, "Bill" ), 0,
-  "Abnormal case: 'group' is null" );
+  expenses = null;
+  assert.equal( sumDebts( expenses, "Bill" ), 0,
+  "Abnormal case: 'expenses' is null" );
 
   assert.end();
 } );
 
-test( "Calculate what a given user paid for a group", assert => {
-  let group;
+test( "Calculate what a given user paid for a list of expenses", assert => {
+  let expenses;
 
-  group = [ {
+  expenses = [ {
     payerId: "Bill",
     price: 100
   } ];
-  assert.equal( sumPayments( group, "Bill" ), 100,
+  assert.equal( sumPayments( expenses, "Bill" ), 100,
     "One payment" );
-  assert.equal( sumPayments( group, "John" ), 0,
+  assert.equal( sumPayments( expenses, "John" ), 0,
     "One payment I didn't pay" );
 
-  group = [ {
+  expenses = [ {
     payerId: "Bill",
     price: 100
   }, {
@@ -111,33 +111,33 @@ test( "Calculate what a given user paid for a group", assert => {
     payerId: "Bill",
     price: 50
   } ];
-  assert.equal( sumPayments( group, "Bill" ), 150,
+  assert.equal( sumPayments( expenses, "Bill" ), 150,
     "Several expenses I paid" );
-  assert.equal( sumPayments( group, "John" ), 100,
+  assert.equal( sumPayments( expenses, "John" ), 100,
     "Several expenses, I paid only one" );
 
-  group = [];
-  assert.equal( sumPayments( group, "Bill" ), 0,
-    "Abnormal case: 'group' is an empty array" );
+  expenses = [];
+  assert.equal( sumPayments( expenses, "Bill" ), 0,
+    "Abnormal case: 'expenses' is an empty array" );
 
-  group = null;
-  assert.equal( sumPayments( group, "Bill" ), 0,
-    "Abnormal case: 'group' is null" );
+  expenses = null;
+  assert.equal( sumPayments( expenses, "Bill" ), 0,
+    "Abnormal case: 'expenses' is null" );
 
   assert.end();
 } );
 
 test( "Calculate a user's final result in a group", assert => {
-  let group;
+  let expenses;
 
-  group = [ {
+  expenses = [ {
     payerId: "Bill",
     shares: [ "Bill", "John", "Billy", "Johnny" ],
     price: 100
   } ];
-  assert.equal( resultForGroup( group, "Bill" ), -75,
+  assert.equal( resultForGroup( expenses, "Bill" ), -75,
     "One expense I paid: my friends owe me in the end" );
-  assert.equal( resultForGroup( group, "John" ), 25,
+  assert.equal( resultForGroup( expenses, "John" ), 25,
     "One expense I didn't pay: I owe my friend in the end" );
 
   assert.end();
