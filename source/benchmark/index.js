@@ -1,1 +1,1 @@
-import 'benchmark/calculation';
+import "benchmark/calculation";

@@ -18,10 +18,10 @@ Benchmark.Suite( "Group of two users" )
   .add( "resultForGroup", () => resultForGroup( expenses, "Bill" ) )
   .add( "resultForTwo", () => resultForTwo( expenses, "Bill" ) )
   // add listeners
-  .on( "cycle", function( event ) {
+  .on( "cycle", function ( event ) {
     console.log( String( event.target ) );
   } )
-  .on( "complete", function() {
+  .on( "complete", function () {
     console.log( "Fastest is " + this.filter( "fastest" ).map( "name" ) );
   } )
   // run async

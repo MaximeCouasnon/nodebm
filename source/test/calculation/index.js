@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from "tape";
 
 import {
   calculateDebt,
@@ -6,7 +6,7 @@ import {
   sumPayments,
   resultForGroup,
   resultForTwo
-} from 'shared/calculation';
+} from "shared/calculation";
 
 test( "Calculate what a given user owes for an expense", assert => {
   let expense;

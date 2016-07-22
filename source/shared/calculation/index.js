@@ -43,7 +43,7 @@ const calculateDebt = ( { shares, price = 0 }, userId ) => {
   const userShares = shares
     .map( id => {
       if ( id === userId ) {
-        return 1
+        return 1;
       }
       return 0;
     } )
@@ -103,7 +103,7 @@ const sumPayments = ( expenses, payerId ) => {
  */
 const resultForGroup = ( expenses, userId ) => {
   return sumDebts( expenses, userId ) - sumPayments( expenses, userId );
-}
+};
 
 /**
  * Calculate the end result for two users
