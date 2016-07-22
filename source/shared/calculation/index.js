@@ -109,14 +109,34 @@ const resultForGroup = ( group, userId ) => {
  * Calculate the end result for two users
  *
  * @param {Array} expenses - An array of expenses
- * @param {String} userA - The first user
- * @param {String} userB - The second user
+ * @param {String} userId - We want to get this user's result
  *
  * @return {Number}
  */
-const resultForTwo = ( expenses, userA, userB ) => {
-  // Somme( Dûs(UserA)/DépensePayéePar(UserB) ) - Somme( Dûs(UserB)/DépensePayéePar(UserA) )
-  return "TODO";
+const resultForTwo = ( expenses, userId ) => {
+  if ( !isFilledArray( expenses ) ) {
+    return 0;
+  }
+
+  const myDebtWhereIDidntPay = expenses
+    .map( expense => {
+      if ( expense.payerId !== userId ) {
+        return calculateDebt( expense, userId );
+      }
+      return 0;
+    } )
+    .reduce( sum );
+
+  const myFriendsDebtWhereIDidPay = expenses
+    .map( expense => {
+      if ( expense.payerId === userId ) {
+        return calculateDebt( expense, userId );
+      }
+      return 0;
+    } )
+    .reduce( sum );
+
+  return myDebtWhereIDidntPay - myFriendsDebtWhereIDidPay;
 };
 
 export {
