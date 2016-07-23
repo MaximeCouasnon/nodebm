@@ -11,6 +11,7 @@
     "benchmark:calculation": "cross-env NODE_PATH=source babel-node source/benchmark/calculation/index.js",
     "test": "cross-env NODE_PATH=source babel-node source/test/index.js",
     "test:calculation": "cross-env NODE_PATH=source babel-node source/test/calculation/index.js",
+    "test:expenses": "cross-env NODE_PATH=source babel-node source/test/expenses/index.js",
     "lint": "eslint --cache .",
     "lint:fix": "eslint --cache --fix .",
     "check": "npm run lint && npm run test && npm outdated --depth=0",
@@ -21,15 +22,26 @@
     "babel-core": "^6.11.4",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.4",
+    "babel-plugin-react-transform": "^2.0.2",
     "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-2": "^6.11.0",
     "benchmark": "^2.1.1",
+    "cheerio": "^0.20.0",
     "cross-env": "^2.0.0",
     "eslint": "^3.1.1",
     "eslint-plugin-react": "^5.2.2",
+    "react-transform-catch-errors": "^1.0.2",
+    "redbox-react": "^1.2.10",
     "tape": "^4.6.0",
-    "updtr": "^0.2.1"
+    "updtr": "^0.2.1",
+    "webpack": "^1.13.1"
   },
   "engines": {
     "node": ">=4"
+  },
+  "dependencies": {
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1"
   }
 }
