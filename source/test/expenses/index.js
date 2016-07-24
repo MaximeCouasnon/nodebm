@@ -1,8 +1,7 @@
 import React from "react";
-import { renderToStaticMarkup as render } from "react-dom/server";
 
 import test from "tape";
-import dom from "cheerio";
+import { shallow } from "enzyme";
 
 import renderTable, { renderExpenseLine } from "shared/components/expenses";
 
@@ -33,16 +32,25 @@ test( "Rendering an expense as a <tr>", assert => {
     }
   };
 
-  let line = render( <Tr { ...props } /> );
+  let tr = <Tr { ...props } />;
 
-  let $ = dom.load( line );
+  let $tr = shallow( tr );
 
-  assert.equal( $( line ).data( "id" ), 1,
-    "Showing the right id" );
-  assert.equal( $( ".expense-date" ).html(), "2016-11-15" );
-  assert.equal( $( ".expense-payerId" ).html(), "Bill" );
-  assert.equal( $( ".expense-price" ).html(), "100" );
-  assert.equal( $( ".expense-label" ).html(), "Cool stuff" );
+  assert.equal( $tr.key(), "1",
+    "Showing the right key" );
+  assert.equal( $tr.find( ".expense-date" ).text(), "2016-11-15" );
+  assert.equal( $tr.find( ".expense-payerId" ).text(), "Bill" );
+  assert.equal( $tr.find( ".expense-price" ).text(), "100" );
+  assert.equal( $tr.find( ".expense-label" ).text(), "Cool stuff" );
+
+  // Changing the label
+  props.expense.label = "Super cool stuff";
+
+  // Re-rendering
+  $tr = shallow( tr );
+
+  assert.equal( $tr.find( ".expense-label" ).text(), "Super cool stuff",
+    "Re-rendering shows the new label" );
 
   assert.end();
 } );
@@ -64,18 +72,46 @@ test( "Rendering a table of expenses", assert => {
     } ]
   };
 
-  let table = render( <Table { ...props } /> );
-  let $ = dom.load( table );
+  let table = <Table { ...props } />;
 
-  assert.equal( $( "caption" ).text(), "Expenses",
+  let $table = shallow( table );
+
+  assert.equal( $table.find( "caption" ).text(), "Expenses",
     "Should output the correct language" );
-  assert.equal( $( ".expenses-thead-date" ).text(), "Date" );
-  assert.equal( $( ".expenses-thead-payerId" ).text(), "Paid by" );
-  assert.equal( $( ".expenses-thead-price" ).text(), "Price" );
-  assert.equal( $( ".expenses-thead-label" ).text(), "Label" );
+  assert.equal( $table.find( ".expenses-thead-date" ).text(), "Date" );
+  assert.equal( $table.find( ".expenses-thead-payerId" ).text(), "Paid by" );
+  assert.equal( $table.find( ".expenses-thead-price" ).text(), "Price" );
+  assert.equal( $table.find( ".expenses-thead-label" ).text(), "Label" );
 
-  assert.equal( $( "tbody tr" ).length, 2,
+  assert.equal( $table.find( "tbody tr" ).length, 2,
     "Two expenses appear in the table" );
+  assert.equal( $table.find( ".expense-price" ).first().text(), "100",
+    "The first expense has the correct price" );
+
+  // Changing the first expense's price
+  props.expenses[ 0 ].price = 70;
+
+  // Changing the language
+  Object.assign( lang, {
+    date: "Date",
+    deleteExpense: "suppr.",
+    expenses: "Dépenses",
+    label: "Motif",
+    payerId: "Payé par",
+    price: "Montant"
+  } );
+
+  // Re-rendering
+  $table = shallow( table );
+
+  assert.equal( $table.find( ".expense-price" ).first().text(), "70",
+    "Re-rendering shows the new price" );
+  assert.equal( $table.find( "caption" ).text(), "Dépenses",
+    "Re-rendering shows the new language" );
+  assert.equal( $table.find( ".expenses-thead-date" ).text(), "Date" );
+  assert.equal( $table.find( ".expenses-thead-payerId" ).text(), "Payé par" );
+  assert.equal( $table.find( ".expenses-thead-price" ).text(), "Montant" );
+  assert.equal( $table.find( ".expenses-thead-label" ).text(), "Motif" );
 
   assert.end();
 } );
