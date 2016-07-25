@@ -7,7 +7,7 @@ export default React => ( {
   label = "",
   price = 0
 } ) => (
-  <tr key={ id }>
+  <tr>
     <td className="expense-delete">
       <span onClick={ () => actions.deleteExpense( id ) }>
         { lang.deleteExpense }

@@ -1,7 +1,7 @@
-import renderExpenseRow from "./ExpenseRow";
+import createExpenseRow from "./ExpenseRow";
 
 export default React => ( { lang, expenses } ) => {
-  const ExpenseRow = renderExpenseRow( React );
+  const ExpenseRow = createExpenseRow( React );
 
   return (
     <table>
@@ -16,7 +16,9 @@ export default React => ( { lang, expenses } ) => {
         </tr>
       </thead>
       <tbody>
-        { expenses.map( expense => ExpenseRow( expense ) ) }
+        { expenses.map( expense => (
+          <ExpenseRow key={ expense.id } { ...expense } />
+        ) ) }
       </tbody>
     </table>
   );

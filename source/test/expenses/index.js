@@ -1,17 +1,14 @@
 import React from "react";
 
 import test from "tape";
-import { shallow } from "enzyme";
+import { render, shallow } from "enzyme";
 
-import renderExpensesTable from "shared/components/expenses/ExpensesTable";
-import renderExpenseRow from "shared/components/expenses/ExpenseRow";
+import createExpensesTable from "shared/components/expenses/ExpensesTable";
+import createExpenseRow from "shared/components/expenses/ExpenseRow";
 
-const ExpensesTable = renderExpensesTable( React );
-const ExpenseRow = renderExpenseRow( React );
+const ExpensesTable = createExpensesTable( React );
+const ExpenseRow = createExpenseRow( React );
 
-const actions = {
-  deleteExpense: () => "TODO "
-};
 const lang = {
   date: "Date",
   deleteExpense: "del.",
@@ -22,6 +19,14 @@ const lang = {
 };
 
 test( "Rendering an expense as a <tr>", assert => {
+  let deleted = false;
+
+  const actions = {
+    deleteExpense: () => {
+      deleted = true;
+    }
+  };
+
   let props = {
     actions,
     lang,
@@ -36,26 +41,24 @@ test( "Rendering an expense as a <tr>", assert => {
 
   let $tr = shallow( tr );
 
-  assert.equal( $tr.key(), "1",
-    "Showing the right key" );
   assert.equal( $tr.find( ".expense-date" ).text(), "2016-11-15" );
   assert.equal( $tr.find( ".expense-payerId" ).text(), "Bill" );
   assert.equal( $tr.find( ".expense-price" ).text(), "100" );
   assert.equal( $tr.find( ".expense-label" ).text(), "Cool stuff" );
 
-  // // Changing the label
-  // props.label = "Super cool stuff";
-  //
-  // // Re-rendering
-  // $tr = shallow( tr );
-  //
-  // assert.equal( $tr.find( ".expense-label" ).text(), "Super cool stuff",
-  //   "Re-rendering shows the new label" );
+  $tr.find( ".expense-delete span" ).simulate( "click" );
+
+  assert.equal( deleted, true,
+    "deleteExpense() should have been called on click" );
 
   assert.end();
 } );
 
 test( "Rendering a table of expenses", assert => {
+  const actions = {
+    deleteExpense: () => true
+  };
+
   let props = {
     lang,
     expenses: [ {
@@ -75,7 +78,7 @@ test( "Rendering a table of expenses", assert => {
 
   let table = <ExpensesTable { ...props } />;
 
-  let $table = shallow( table );
+  let $table = render( table );
 
   assert.equal( $table.find( "caption" ).text(), "Expenses",
     "Should output the correct language" );
@@ -103,7 +106,7 @@ test( "Rendering a table of expenses", assert => {
   } );
 
   // Re-rendering
-  $table = shallow( table );
+  $table = render( table );
 
   assert.equal( $table.find( ".expense-price" ).first().text(), "70",
     "Re-rendering shows the new price" );
