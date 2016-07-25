@@ -1,5 +1,5 @@
-import { connect } from 'react-redux';
-import createExpensesTable from './ExpensesTable';
+import { connect } from "react-redux";
+import createExpensesTable from "../expenses/ExpensesTable";
 
 const createExpensesPage = React => ( props ) => {
   const ExpensesTable = createExpensesTable( React );

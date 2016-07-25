@@ -7,6 +7,11 @@
   },
   "license": "GPL-3.0",
   "scripts": {
+    "clean": "rimraf build",
+    "build:webpack": "webpack --config webpack.config.prod.js",
+    "build:webpack:dev": "webpack --config webpack.config.dev.js",
+    "build": "npm run clean && npm run build:webpack",
+    "build:dev": "npm run clean && npm run build:webpack:dev",
     "benchmark": "cross-env NODE_PATH=source babel-node source/benchmark/index.js",
     "benchmark:calculation": "cross-env NODE_PATH=source babel-node source/benchmark/calculation/index.js",
     "test": "cross-env NODE_PATH=source babel-node source/test/index.js",
@@ -31,12 +36,15 @@
     "enzyme": "^2.4.1",
     "eslint": "^3.1.1",
     "eslint-plugin-react": "^5.2.2",
+    "open": "0.0.5",
     "react-addons-test-utils": "^15.2.1",
     "react-transform-catch-errors": "^1.0.2",
     "redbox-react": "^1.2.10",
+    "rimraf": "^2.5.4",
     "tape": "^4.6.0",
     "updtr": "^0.2.1",
-    "webpack": "^1.13.1"
+    "webpack": "^1.13.1",
+    "webpack-dev-middleware": "^1.6.1"
   },
   "engines": {
     "node": ">=4"
@@ -45,6 +53,8 @@
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
     "react-redux": "^4.4.5",
+    "react-router": "^2.6.0",
+    "react-router-redux": "^4.0.5",
     "redux": "^3.5.2"
   }
 }
