@@ -1,18 +1,16 @@
 export const renderExpenseLine = React => ( {
-  actions: { deleteExpense },
+  actions,
   lang,
-  expense: {
-    id,
-    payerId = "",
-    date = "",
-    label = "",
-    price = 0
-  }
+  id,
+  payerId = "",
+  date = "",
+  label = "",
+  price = 0
 } ) => {
   return (
-    <tr key={ id } data-id={ id }>
+    <tr key={ id }>
       <td className="expense-delete">
-        <span onClick={ () => deleteExpense( id ) }>
+        <span onClick={ () => actions.deleteExpense( id ) }>
           { lang.deleteExpense }
         </span>
       </td>
@@ -24,7 +22,7 @@ export const renderExpenseLine = React => ( {
   );
 };
 
-export default React => ( { actions, lang, expenses } ) => {
+export default React => ( { lang, expenses } ) => {
   const Tr = renderExpenseLine( React );
 
   return (
@@ -40,7 +38,7 @@ export default React => ( { actions, lang, expenses } ) => {
         </tr>
       </thead>
       <tbody>
-        { expenses.map( expense => Tr( { actions, lang, expense } ) ) }
+        { expenses.map( expense => Tr( expense ) ) }
       </tbody>
     </table>
   );
