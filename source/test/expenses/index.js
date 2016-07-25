@@ -3,10 +3,11 @@ import React from "react";
 import test from "tape";
 import { shallow } from "enzyme";
 
-import renderTable, { renderExpenseLine } from "shared/components/expenses";
+import renderExpensesTable from "shared/components/expenses/ExpensesTable";
+import renderExpenseRow from "shared/components/expenses/ExpenseRow";
 
-const Table = renderTable( React );
-const Tr = renderExpenseLine( React );
+const ExpensesTable = renderExpensesTable( React );
+const ExpenseRow = renderExpenseRow( React );
 
 const actions = {
   deleteExpense: () => "TODO "
@@ -31,7 +32,7 @@ test( "Rendering an expense as a <tr>", assert => {
     label: "Cool stuff"
   };
 
-  let tr = <Tr { ...props } />;
+  let tr = <ExpenseRow { ...props } />;
 
   let $tr = shallow( tr );
 
@@ -72,7 +73,7 @@ test( "Rendering a table of expenses", assert => {
     } ]
   };
 
-  let table = <Table { ...props } />;
+  let table = <ExpensesTable { ...props } />;
 
   let $table = shallow( table );
 
