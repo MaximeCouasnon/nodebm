@@ -1,6 +1,9 @@
 import createExpenseRow from "./ExpenseRow";
 
-export default React => ( { lang, expenses } ) => {
+export default React => ( {
+  lang,
+  expenses
+} ) => {
   const ExpenseRow = createExpenseRow( React );
 
   return (

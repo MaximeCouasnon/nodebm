@@ -35,7 +35,10 @@ const isFilledArray = thing => {
  *
  * @return {Number} - What the user owes
  */
-const calculateDebt = ( { shares, price = 0 }, userId ) => {
+const calculateDebt = ( {
+  shares,
+  price = 0
+}, userId ) => {
   if ( !isFilledArray( shares ) ) {
     return 0;
   }

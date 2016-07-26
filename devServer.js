@@ -20,4 +20,8 @@ const logAndOpen = () => {
   open( serverURL );
 };
 
-app.listen( NODE_PORT, NODE_HOST, ( err ) => err ? console.error( err ) : logAndOpen() );
+app.listen(
+  NODE_PORT,
+  NODE_HOST,
+  ( err ) => err ? console.error( err ) : logAndOpen()
+);
