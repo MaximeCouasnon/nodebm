@@ -10,7 +10,7 @@ export default React => ( {
   <tr>
     <td className="expense-delete">
       <span onClick={ () => actions.deleteExpense( id ) }>
-        { lang.deleteExpense }
+        { lang( "del." ) }
       </span>
     </td>
     <td className="expense-payerId">{ payerId }</td>

@@ -3,20 +3,15 @@ import React from "react";
 import test from "tape";
 import { render, shallow } from "enzyme";
 
+import languagesFactory from "shared/i18n";
+
 import createExpensesTable from "shared/components/expenses/ExpensesTable";
 import createExpenseRow from "shared/components/expenses/ExpenseRow";
 
 const ExpensesTable = createExpensesTable( React );
 const ExpenseRow = createExpenseRow( React );
 
-const lang = {
-  date: "Date",
-  deleteExpense: "del.",
-  expenses: "Expenses",
-  label: "Label",
-  payerId: "Paid by",
-  price: "Price"
-};
+let lang = languagesFactory( "en-US" );
 
 test( "Rendering an expense as a <tr>", assert => {
   let deleted = false;
@@ -96,14 +91,7 @@ test( "Rendering a table of expenses", assert => {
   props.expenses[ 0 ].price = 70;
 
   // Changing the language
-  Object.assign( lang, {
-    date: "Date",
-    deleteExpense: "suppr.",
-    expenses: "Dépenses",
-    label: "Motif",
-    payerId: "Payé par",
-    price: "Montant"
-  } );
+  lang.switchTo( "fr-FR" );
 
   // Re-rendering
   $table = render( table );
@@ -112,7 +100,6 @@ test( "Rendering a table of expenses", assert => {
     "Re-rendering shows the new price" );
   assert.equal( $table.find( "caption" ).text(), "Dépenses",
     "Re-rendering shows the new language" );
-  assert.equal( $table.find( ".expenses-thead-date" ).text(), "Date" );
   assert.equal( $table.find( ".expenses-thead-payerId" ).text(), "Payé par" );
   assert.equal( $table.find( ".expenses-thead-price" ).text(), "Montant" );
   assert.equal( $table.find( ".expenses-thead-label" ).text(), "Motif" );

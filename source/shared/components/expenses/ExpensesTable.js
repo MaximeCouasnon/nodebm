@@ -8,14 +8,14 @@ export default React => ( {
 
   return (
     <table>
-      <caption>{ lang.expenses }</caption>
+      <caption>{ lang( "Expenses" ) }</caption>
       <thead>
         <tr>
           <td></td>
-          <td className="expenses-thead-payerId">{ lang.payerId }</td>
-          <td className="expenses-thead-date">{ lang.date }</td>
-          <td className="expenses-thead-label">{ lang.label }</td>
-          <td className="expenses-thead-price">{ lang.price }</td>
+          <td className="expenses-thead-payerId">{ lang( "Paid by" ) }</td>
+          <td className="expenses-thead-date">{ lang( "Date" ) }</td>
+          <td className="expenses-thead-label">{ lang( "Label" ) }</td>
+          <td className="expenses-thead-price">{ lang( "Price" ) }</td>
         </tr>
       </thead>
       <tbody>
